@@ -4,7 +4,7 @@ A lightweight system for automating marketing intelligence workflows, including 
 
 ## Problem
 
-Performance marketing generates high volumes of fragmented data across channels, platforms, and tools. Most teams drown in dashboards and reports without synthesizing signals into decisions. This system closes that gap by automating the synthesis layer — turning raw data from multiple sources into a single decision-ready briefing.
+Performance marketing generates high volumes of fragmented data across channels, platforms, and tools. Most teams rely on dashboards and reports but lack consistent synthesis into actionable decisions. This system addresses that gap by automating the synthesis layer — turning raw inputs into a single, decision-ready briefing.
 
 ## Architecture
 
@@ -16,30 +16,31 @@ hub.py (orchestrator)
 └── config/modes.json   — composable workflow definitions
 ```
 
-The orchestrator dispatches to modular agents via dynamic import. Each agent exposes a `run()` interface and returns structured output. Workflows are composed from config — not hardcoded sequences.
+The orchestrator dispatches modular agents via dynamic import. Each agent exposes a run() interface and returns structured output. Workflows are defined through configuration rather than hardcoded sequences.
 
-### Core Concepts
+Core Concepts
 
-- **Agents** are stateless modules with a single `run(*args) -> dict` interface
-- **Modes** are config-driven workflow compositions (e.g., "morning" runs briefing -> scan -> organize)
-- **State-aware execution** — the system checks machine state before each step and skips redundant work
-- **Signal scoring** — email triage uses weighted pattern matching to surface what matters and suppress noise
+* Modular agents with a consistent run(*args) -> dict interface
+* Config-driven workflows (“modes”) for repeatable execution
+* State-aware execution to avoid redundant work
+* Signal scoring to prioritize high-value inputs and suppress noise
 
-## Capabilities
+Capabilities
 
-- **Morning Intelligence Briefing** — synthesizes email, calendar, and project data into a decision-ready report with confidence-scored triage
-- **Health Scanner** — checks project repos for git hygiene, credential exposure, staleness, and dependency health
-- **Smart Organizer** — categorizes and routes files by type with dry-run preview
-- **Composable Modes** — define custom workflows in JSON that chain agents with conditional logic
-- **Trend Memory** — tracks signals over time for pattern detection
+* Intelligence Briefing — synthesizes inputs into a decision-ready report with scored prioritization
+* Health Scanner — evaluates project hygiene, credential exposure risk, and system drift
+* Smart Organizer — categorizes and routes files with dry-run preview
+* Composable Workflows — chain agents through configurable modes
+* Trend Memory — tracks signals over time for pattern detection
 
-## Stack
+Stack
 
-- Python 3.12+
-- SQLite (local data layer)
-- macOS automation (AppleScript for window management, app launching)
-- Gmail API (read-only inbox stats)
-- No cloud dependencies, no databases, no daemons
+Python 3.12+
+SQLite (local state)
+macOS automation (AppleScript)
+Gmail API (read-only)
+
+No cloud dependencies. Fully local execution.
 
 ## Usage
 
@@ -64,14 +65,14 @@ cp config/projects.example.json config/projects.json
 cp config/modes.example.json config/modes.json
 ```
 
-## Design Principles
+Design Principles
 
-- **Diagnostic first** — measure before acting
-- **Signal over noise** — score and filter, don't just list
-- **Config over code** — workflows are JSON, not Python
-- **State-aware** — skip what's already done
-- **Anti-drift** — `audit` command detects system bloat
+* Diagnostic first — measure before acting
+* Signal over noise — prioritize what matters
+* Config over code — workflows are defined, not hardcoded
+* State-aware — avoid redundant execution
+* Anti-drift — built-in system auditing
 
-## Why This Exists
+Why This Exists
 
-This reflects how I approach marketing operations: structured systems, repeatable workflows, and a relentless focus on signal over noise. The same diagnostic-first, systems-driven methodology I apply to campaign architecture and team operations.
+This project reflects how I approach marketing operations: structured systems, repeatable workflows, and a focus on signal over noise. The same principles applied to campaign architecture, reporting, and team operations at scale.
