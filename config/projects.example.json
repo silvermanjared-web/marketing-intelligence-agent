@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "marketing-analytics": "~/projects/marketing-analytics",
+    "campaign-automation": "~/projects/campaign-automation",
+    "reporting-pipeline": "~/projects/reporting-pipeline",
+    "landing-page-tests": "~/projects/landing-page-tests"
+  }
+}

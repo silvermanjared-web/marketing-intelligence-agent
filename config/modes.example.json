@@ -1,0 +1,37 @@
+{
+  "modes": {
+    "morning": {
+      "description": "Full morning boot — briefing, scan, apps, layout",
+      "steps": [
+        {"action": "briefing"},
+        {"action": "scan"},
+        {"action": "launch", "profile": "work"},
+        {"action": "tile"},
+        {"action": "organize", "condition": "clutter_high"}
+      ]
+    },
+    "deep_work": {
+      "description": "Clean, focused environment — no briefing, no scan",
+      "steps": [
+        {"action": "launch", "profile": "dev"},
+        {"action": "tile"},
+        {"action": "focus", "minutes": 90}
+      ]
+    },
+    "review": {
+      "description": "Briefing + apps for review sessions",
+      "steps": [
+        {"action": "briefing"},
+        {"action": "launch", "profile": "work"},
+        {"action": "tile"}
+      ]
+    },
+    "cleanup": {
+      "description": "Scan projects + organize files",
+      "steps": [
+        {"action": "scan"},
+        {"action": "organize"}
+      ]
+    }
+  }
+}
