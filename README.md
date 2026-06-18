@@ -14,9 +14,29 @@ It turns raw operational inputs into structured, prioritized intelligence so an 
 
 ## Architecture
 
-The system is organized around a local orchestrator that can dispatch modular agents for briefing generation, health scanning, and file organization.
+```text
+hub.py (orchestrator)
+├── briefing_agent      — morning intelligence synthesis
+├── health_scanner      — project and campaign health checks
+├── file_organizer      — report and asset organization
+└── config/modes.json   — composable workflow definitions
+```
 
-Workflows are defined through configuration rather than hardcoded sequences.
+```mermaid
+flowchart LR
+    Inputs[Operational inputs] --> Hub[hub.py orchestrator]
+    Config[Workflow configuration] --> Hub
+    Hub --> Briefing[Briefing agent]
+    Hub --> Scanner[Health scanner]
+    Hub --> Organizer[File organizer]
+    Briefing --> Output[Prioritized brief]
+    Scanner --> Output
+    Organizer --> Output
+    Output --> Review[Human review]
+    Review --> Action[Next action]
+```
+
+The orchestrator dispatches modular agents through a consistent interface. Workflows are defined through configuration rather than hardcoded sequences.
 
 ## Core concepts
 
@@ -45,7 +65,18 @@ No required cloud runtime. Designed for local execution.
 
 ## Usage
 
-Use the local orchestrator for interactive workflows, briefing generation, coordinated mode runs, project health scans, workspace organization, and system health audits.
+Entry point: `hub.py`
+
+Core local commands:
+
+| Command | Purpose |
+|---|---|
+| `python hub.py` | Open the interactive menu |
+| `python hub.py briefing` | Generate a morning intelligence report |
+| `python hub.py mode morning` | Run a coordinated morning workflow |
+| `python hub.py scan` | Run a project health check |
+| `python hub.py mode deep_work` | Prepare a focused workspace workflow |
+| `python hub.py audit` | Run a system health audit |
 
 ## Example output
 
@@ -53,7 +84,14 @@ See [`examples/example-run.md`](examples/example-run.md) for a mock briefing run
 
 ## Configuration
 
-Copy the example configuration files before running local workflows. Keep local configuration and private project data out of public commits.
+Copy the example configuration files before running local workflows:
+
+| Example file | Local file |
+|---|---|
+| `config/projects.example.json` | `config/projects.json` |
+| `config/modes.example.json` | `config/modes.json` |
+
+Keep local configuration and private project data out of public commits.
 
 ## Related repos
 
