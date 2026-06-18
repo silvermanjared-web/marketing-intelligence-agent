@@ -14,33 +14,13 @@ It turns raw operational inputs into structured, prioritized intelligence so an 
 
 ## Architecture
 
-```text
-hub.py (orchestrator)
-├── briefing_agent      — morning intelligence synthesis
-├── health_scanner      — project and campaign health checks
-├── file_organizer      — report and asset organization
-└── config/modes.json   — composable workflow definitions
-```
+The system is organized around a local orchestrator that can dispatch modular agents for briefing generation, health scanning, and file organization.
 
-```mermaid
-flowchart LR
-    Inputs[Operational inputs] --> Hub[hub.py orchestrator]
-    Config[Workflow configuration] --> Hub
-    Hub --> Briefing[Briefing agent]
-    Hub --> Scanner[Health scanner]
-    Hub --> Organizer[File organizer]
-    Briefing --> Output[Prioritized brief]
-    Scanner --> Output
-    Organizer --> Output
-    Output --> Review[Human review]
-    Review --> Action[Next action]
-```
-
-The orchestrator dispatches modular agents through a consistent interface. Workflows are defined through configuration rather than hardcoded sequences.
+Workflows are defined through configuration rather than hardcoded sequences.
 
 ## Core concepts
 
-- **Modular agents** — each agent exposes a consistent `run(*args) -> dict` interface
+- **Modular agents** — each agent exposes a consistent run interface
 - **Config-driven workflows** — repeatable modes define how agents work together
 - **State-aware execution** — avoids redundant work and supports repeatable routines
 - **Signal scoring** — prioritizes high-value inputs and suppresses noise
@@ -65,17 +45,7 @@ No required cloud runtime. Designed for local execution.
 
 ## Usage
 
-```bash
-# Interactive menu
-python hub.py
-
-# Direct commands
-python hub.py briefing          # Morning intelligence report
-python hub.py mode morning      # Coordinated boot sequence
-python hub.py scan              # Project health check
-python hub.py mode deep_work    # Focused workspace
-python hub.py audit             # System health audit
-```
+Use the local orchestrator for interactive workflows, briefing generation, coordinated mode runs, project health scans, workspace organization, and system health audits.
 
 ## Example output
 
@@ -83,20 +53,15 @@ See [`examples/example-run.md`](examples/example-run.md) for a mock briefing run
 
 ## Configuration
 
-Copy the example configs and customize them locally:
-
-```bash
-cp config/projects.example.json config/projects.json
-cp config/modes.example.json config/modes.json
-```
-
-Keep local configuration and private project data out of public commits.
+Copy the example configuration files before running local workflows. Keep local configuration and private project data out of public commits.
 
 ## Related repos
 
-- [`growth-architecture-os`](https://github.com/silvermanjared-web/growth-architecture-os) — the operating-system hub that explains the broader growth architecture.
-- [`marketing-ops-toolkit`](https://github.com/silvermanjared-web/marketing-ops-toolkit) — practical automation scripts that complement the intelligence layer.
-- [`marketing-ops-playbooks`](https://github.com/silvermanjared-web/marketing-ops-playbooks) — documented methods and validation playbooks that this agent can help operationalize.
+This repo is part of a connected public system. See the [GitHub Ecosystem Map](https://github.com/silvermanjared-web/growth-architecture-os/blob/main/docs/ecosystem-map.md) for how the repos relate.
+
+- [`growth-architecture-os`](https://github.com/silvermanjared-web/growth-architecture-os)
+- [`marketing-ops-toolkit`](https://github.com/silvermanjared-web/marketing-ops-toolkit)
+- [`marketing-ops-playbooks`](https://github.com/silvermanjared-web/marketing-ops-playbooks)
 
 ## Design principles
 
