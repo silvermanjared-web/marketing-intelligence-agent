@@ -92,6 +92,12 @@ cp config/modes.example.json config/modes.json
 
 Keep local configuration and private project data out of public commits.
 
+## Related repos
+
+- [`growth-architecture-os`](https://github.com/silvermanjared-web/growth-architecture-os) — the operating-system hub that explains the broader growth architecture.
+- [`marketing-ops-toolkit`](https://github.com/silvermanjared-web/marketing-ops-toolkit) — practical automation scripts that complement the intelligence layer.
+- [`marketing-ops-playbooks`](https://github.com/silvermanjared-web/marketing-ops-playbooks) — documented methods and validation playbooks that this agent can help operationalize.
+
 ## Design principles
 
 - **Diagnostic first** — measure before acting
