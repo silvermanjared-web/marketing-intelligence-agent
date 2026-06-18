@@ -63,6 +63,10 @@ python hub.py mode deep_work    # Focused workspace
 python hub.py audit             # System health audit
 ```
 
+## Example output
+
+See [`examples/example-run.md`](examples/example-run.md) for a mock briefing run that shows the intended output shape: detected signals, prioritized risks, and recommended next actions.
+
 ## Configuration
 
 Copy the example configs and customize them locally:
