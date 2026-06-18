@@ -22,6 +22,20 @@ hub.py (orchestrator)
 └── config/modes.json   — composable workflow definitions
 ```
 
+```mermaid
+flowchart LR
+    Inputs[Operational inputs] --> Hub[hub.py orchestrator]
+    Config[Workflow configuration] --> Hub
+    Hub --> Briefing[Briefing agent]
+    Hub --> Scanner[Health scanner]
+    Hub --> Organizer[File organizer]
+    Briefing --> Output[Prioritized brief]
+    Scanner --> Output
+    Organizer --> Output
+    Output --> Review[Human review]
+    Review --> Action[Next action]
+```
+
 The orchestrator dispatches modular agents through a consistent interface. Workflows are defined through configuration rather than hardcoded sequences.
 
 ## Core concepts
@@ -35,7 +49,7 @@ The orchestrator dispatches modular agents through a consistent interface. Workf
 ## Capabilities
 
 - **Intelligence briefing** — synthesizes inputs into a decision-ready report with scored prioritization
-- **Health scanning** — evaluates project hygiene, credential exposure risk, and system drift
+- **Health scanning** — evaluates project hygiene and system drift
 - **Smart organization** — categorizes and routes files with dry-run preview
 - **Composable workflows** — chains agents through configurable modes
 - **Trend memory** — tracks signals over time for pattern detection
@@ -76,7 +90,7 @@ cp config/projects.example.json config/projects.json
 cp config/modes.example.json config/modes.json
 ```
 
-Do not commit local credentials, tokens, private paths, or sensitive project data.
+Keep local configuration and private project data out of public commits.
 
 ## Design principles
 
