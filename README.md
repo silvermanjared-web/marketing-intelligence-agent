@@ -1,14 +1,20 @@
 # Marketing Intelligence Agent
 
-A lightweight system for automating marketing intelligence workflows, including performance monitoring, risk detection, and executive reporting. Designed to reduce manual reporting overhead and improve decision speed across complex paid media portfolios.
+A lightweight local system for automating marketing intelligence workflows: performance monitoring, risk detection, workflow orchestration, and executive-ready briefing generation.
 
-## Problem
+This project is designed to reduce manual reporting overhead and improve decision speed across complex marketing and paid media environments.
 
-Performance marketing generates high volumes of fragmented data across channels, platforms, and tools. Most teams rely on dashboards and reports but lack consistent synthesis into actionable decisions. This system addresses that gap by automating the synthesis layer — turning raw inputs into a single, decision-ready briefing.
+## Why this exists
+
+Performance marketing creates fragmented signals across platforms, files, reports, inboxes, and team workflows. Most teams have dashboards, but dashboards do not always explain what matters, what changed, or what needs attention.
+
+This agent addresses the synthesis layer.
+
+It turns raw operational inputs into structured, prioritized intelligence so an operator can move faster without losing judgment.
 
 ## Architecture
 
-```
+```text
 hub.py (orchestrator)
 ├── briefing_agent      — morning intelligence synthesis
 ├── health_scanner      — project and campaign health checks
@@ -16,31 +22,32 @@ hub.py (orchestrator)
 └── config/modes.json   — composable workflow definitions
 ```
 
-The orchestrator dispatches modular agents via dynamic import. Each agent exposes a run() interface and returns structured output. Workflows are defined through configuration rather than hardcoded sequences.
+The orchestrator dispatches modular agents through a consistent interface. Workflows are defined through configuration rather than hardcoded sequences.
 
-Core Concepts
+## Core concepts
 
-* Modular agents with a consistent run(*args) -> dict interface
-* Config-driven workflows (“modes”) for repeatable execution
-* State-aware execution to avoid redundant work
-* Signal scoring to prioritize high-value inputs and suppress noise
+- **Modular agents** — each agent exposes a consistent `run(*args) -> dict` interface
+- **Config-driven workflows** — repeatable modes define how agents work together
+- **State-aware execution** — avoids redundant work and supports repeatable routines
+- **Signal scoring** — prioritizes high-value inputs and suppresses noise
+- **Local-first operation** — designed to run without unnecessary cloud dependencies
 
-Capabilities
+## Capabilities
 
-* Intelligence Briefing — synthesizes inputs into a decision-ready report with scored prioritization
-* Health Scanner — evaluates project hygiene, credential exposure risk, and system drift
-* Smart Organizer — categorizes and routes files with dry-run preview
-* Composable Workflows — chain agents through configurable modes
-* Trend Memory — tracks signals over time for pattern detection
+- **Intelligence briefing** — synthesizes inputs into a decision-ready report with scored prioritization
+- **Health scanning** — evaluates project hygiene, credential exposure risk, and system drift
+- **Smart organization** — categorizes and routes files with dry-run preview
+- **Composable workflows** — chains agents through configurable modes
+- **Trend memory** — tracks signals over time for pattern detection
 
-Stack
+## Stack
 
-Python 3.12+
-SQLite (local state)
-macOS automation (AppleScript)
-Gmail API (read-only)
+- Python 3.12+
+- SQLite for local state
+- macOS automation where useful
+- Gmail API for read-only workflows where configured
 
-No cloud dependencies. Fully local execution.
+No required cloud runtime. Designed for local execution.
 
 ## Usage
 
@@ -50,29 +57,32 @@ python hub.py
 
 # Direct commands
 python hub.py briefing          # Morning intelligence report
-python hub.py mode morning      # Full coordinated boot sequence
+python hub.py mode morning      # Coordinated boot sequence
 python hub.py scan              # Project health check
-python hub.py mode deep_work    # Launch focused workspace
+python hub.py mode deep_work    # Focused workspace
 python hub.py audit             # System health audit
 ```
 
 ## Configuration
 
-Copy the example configs and customize:
+Copy the example configs and customize them locally:
 
 ```bash
 cp config/projects.example.json config/projects.json
 cp config/modes.example.json config/modes.json
 ```
 
-Design Principles
+Do not commit local credentials, tokens, private paths, or sensitive project data.
 
-* Diagnostic first — measure before acting
-* Signal over noise — prioritize what matters
-* Config over code — workflows are defined, not hardcoded
-* State-aware — avoid redundant execution
-* Anti-drift — built-in system auditing
+## Design principles
 
-Why This Exists
+- **Diagnostic first** — measure before acting
+- **Signal over noise** — prioritize what matters
+- **Config over code** — workflows should be defined, not hardcoded
+- **State-aware** — avoid redundant execution
+- **Anti-drift** — build system auditing into the workflow
+- **Human judgment stays in the loop** — automation should support decisions, not pretend to replace them
 
-This project reflects how I approach marketing operations: structured systems, repeatable workflows, and a focus on signal over noise. The same principles applied to campaign architecture, reporting, and team operations at scale.
+## What this demonstrates
+
+This project reflects how I approach marketing operations and growth systems: structured workflows, repeatable routines, clear signal detection, and practical automation that reduces manual overhead without sacrificing judgment.
