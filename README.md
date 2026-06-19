@@ -99,6 +99,8 @@ This repo is part of a connected public system. See the [GitHub Ecosystem Map](h
 
 Shared terminology: [Common Language](https://github.com/silvermanjared-web/growth-architecture-os/blob/main/docs/common-language.md).
 
+Usage and rights: see [USAGE.md](USAGE.md).
+
 - [`growth-architecture-os`](https://github.com/silvermanjared-web/growth-architecture-os)
 - [`marketing-ops-toolkit`](https://github.com/silvermanjared-web/marketing-ops-toolkit)
 - [`marketing-ops-playbooks`](https://github.com/silvermanjared-web/marketing-ops-playbooks)
