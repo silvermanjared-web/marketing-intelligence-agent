@@ -47,3 +47,22 @@ client_secret_*.json
 # Briefing output
 briefing_latest.txt
 archive/
+
+# Phase 16 push-readiness hardening
+
+# Local secrets and credentials
+!.env.example
+.env.keys
+client_secret*.json
+credentials*.json
+token*.json
+tokens*.json
+google-ads.yaml
+google_ads.yaml
+
+# Python/runtime caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS/editor noise
