@@ -75,8 +75,16 @@ Core local commands:
 | `python hub.py briefing` | Generate a morning intelligence report |
 | `python hub.py mode morning` | Run a coordinated morning workflow |
 | `python hub.py scan` | Run a project health check |
+| `python hub.py organize` | Preview Desktop/Downloads organization |
+| `python hub.py clean --confirm` | Apply Desktop/Downloads organization after preview review |
 | `python hub.py mode deep_work` | Prepare a focused workspace workflow |
 | `python hub.py audit` | Run a system health audit |
+
+Local side-effect guardrails:
+
+- Briefings are saved under `logs/` by default. Set `MIA_OPEN_DESKTOP_BRIEFING=1` only if you want a Desktop copy opened locally.
+- `organize` is preview-only. `clean --confirm` is required before the hub moves files in Desktop or Downloads.
+- Gmail briefing reads are optional and read-only. Set `MIA_GMAIL_CREDENTIAL_DIR` if your OAuth files live outside the default local credential folder.
 
 ## Example output
 

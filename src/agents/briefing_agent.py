@@ -60,8 +60,11 @@ def get_gmail_summary() -> dict | None:
     Returns unread count and today's message count, or None if
     credentials are unavailable. Read-only — never modifies the inbox.
     """
-    token_path = HOME / "gmail-processor" / "token.json"
-    creds_path = HOME / "gmail-processor" / "credentials.json"
+    credential_dir = Path(
+        os.environ.get("MIA_GMAIL_CREDENTIAL_DIR", str(HOME / "gmail-processor"))
+    )
+    token_path = credential_dir / "token.json"
+    creds_path = credential_dir / "credentials.json"
 
     if not token_path.exists() or not creds_path.exists():
         return None
@@ -79,7 +82,6 @@ def get_gmail_summary() -> dict | None:
             creds.refresh(Request())
 
         service = build("gmail", "v1", credentials=creds)
-        profile = service.users().getProfile(userId="me").execute()
 
         # Unread count
         results = service.users().messages().list(
@@ -95,7 +97,6 @@ def get_gmail_summary() -> dict | None:
         today_count = today_results.get("resultSizeEstimate", 0)
 
         return {
-            "email": profile.get("emailAddress", "unknown"),
             "unread": unread,
             "today": today_count,
         }
@@ -285,7 +286,7 @@ def run(*args) -> dict:
     # Source status reporting
     src_lines = []
     if gmail and "error" not in gmail:
-        src_lines.append(f"Gmail API: {gmail['unread']} unread ({gmail['email']})")
+        src_lines.append(f"Gmail API: {gmail['unread']} unread (account configured)")
     elif gmail and "error" in gmail:
         src_lines.append(f"Gmail API: {gmail['error']}")
     if imap_messages is not None:

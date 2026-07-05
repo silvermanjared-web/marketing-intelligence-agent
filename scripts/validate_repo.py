@@ -20,7 +20,7 @@ SECRET_PATTERNS = [
     re.compile(r"BEGIN (RSA|OPENSSH|PRIVATE) KEY"),
 ]
 SENSITIVE_NAME = re.compile(
-    r"(^|/)(\.env(\..*)?|\.env\.keys|client_secret.*\.json|credentials.*\.json|token.*\.json|tokens.*\.json|google[-_]ads\.ya?ml)$",
+    r"(^|/)(\.env(\..*)?|\.env\.keys|client_secret.*\.json|credentials.*\.json|token.*\.json|tokens.*\.json|google[-_]ads\.ya?ml|logs/.*|state/.*|briefing_latest\.txt|archive/.*)$",
     re.IGNORECASE,
 )
 ALLOW_TRACKED = {
@@ -29,6 +29,7 @@ ALLOW_TRACKED = {
 }
 SKIP_DIRS = {".git", "node_modules", "venv", ".venv", "__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
 TEXT_SUFFIXES = {".py", ".md", ".txt", ".json", ".yaml", ".yml", ".toml", ".sh", ".css", ".js", ".ts", ".html"}
+LOCAL_PATH_PATTERN = re.compile(r"/Users/[A-Za-z0-9._-]+/")
 
 def git(args: list[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True, check=False)
@@ -73,6 +74,17 @@ def main() -> int:
             if pattern.search(text):
                 failures.append(f"Secret-like pattern in {rel}: {pattern.pattern}")
                 break
+
+        if LOCAL_PATH_PATTERN.search(text):
+            failures.append(f"Local absolute path found in {rel}")
+
+        if rel.endswith(".md"):
+            for lineno, line in enumerate(text.splitlines(), 1):
+                if "python hub.py clean" in line and "--confirm" not in line:
+                    failures.append(
+                        f"Write-capable clean command missing --confirm in {rel}:{lineno}"
+                    )
+                    break
 
     status = git(["status", "--short"]).stdout.strip()
     if status:

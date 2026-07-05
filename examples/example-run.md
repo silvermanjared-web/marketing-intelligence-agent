@@ -12,6 +12,8 @@ The point of this example is not to claim autonomous decision-making. The agent 
 | Briefing | `python hub.py briefing` | Runs the briefing agent and saves a local brief |
 | Morning mode | `python hub.py mode morning` | Runs a configured sequence of briefing, scan, organization, and workspace actions |
 | Health scan | `python hub.py scan` | Runs project/workspace health checks |
+| Organize preview | `python hub.py organize` | Previews Desktop/Downloads organization |
+| Clean apply | `python hub.py clean --confirm` | Applies reviewed Desktop/Downloads organization |
 | Audit | `python hub.py audit` | Checks config presence, agent drift, log volume, and mode state |
 
 ## Example: briefing run
@@ -29,7 +31,7 @@ python hub.py briefing
   [>>] [08:31:14] Starting agent: briefing_agent
   [OK] [08:31:16] Agent 'briefing_agent' completed in 2.1s
   Run completed in 2.1s
-  [OK] [08:31:16] Briefing saved: briefing_latest.txt, briefing_20260619_0831.txt, Desktop
+  [OK] [08:31:16] Briefing saved: briefing_latest.txt, briefing_20260619_0831.txt
 ```
 
 ### Sample briefing output
@@ -126,4 +128,5 @@ The agent is designed to turn scattered operational signals into prioritized act
 - This example uses mock data.
 - Do not commit live email, campaign, account, credential, or client data.
 - Real outputs should be reviewed before sharing externally.
-- Local delivery behavior may vary by machine and configuration.
+- Briefing output stays under `logs/` unless Desktop delivery is explicitly enabled.
+- File organization should be previewed before running `python hub.py clean --confirm`.

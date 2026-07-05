@@ -9,7 +9,7 @@ Usage:
     python hub.py briefing          # Morning intelligence report
     python hub.py scan              # Project health check
     python hub.py organize          # Smart file organizer (dry run)
-    python hub.py clean             # Execute file organization
+    python hub.py clean --confirm   # Execute file organization
     python hub.py focus [minutes]   # Focus mode via AppleScript
     python hub.py launch [profile]  # Launch app profile (work/dev/comms)
     python hub.py tile              # Tile windows into grid
@@ -153,7 +153,7 @@ class _TeeWriter:
 
 
 def deliver_briefing(output: str) -> None:
-    """Save briefing output to log files and optionally open on Desktop."""
+    """Save briefing output to log files, with optional Desktop delivery."""
     now = datetime.now()
     LOGS_DIR.mkdir(exist_ok=True)
 
@@ -167,20 +167,24 @@ def deliver_briefing(output: str) -> None:
     archive = archive_dir / f"briefing_{now.strftime('%Y%m%d_%H%M')}.txt"
     archive.write_text(output)
 
-    # Copy to Desktop for quick access.
-    desktop_path = HOME / "Desktop" / "Daily Briefing.txt"
-    desktop_path.write_text(output)
+    saved_locations = [latest.name, archive.name]
 
-    try:
-        subprocess.Popen(
-            ["open", str(desktop_path)],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    except Exception:
-        pass  # Non-critical — user can open manually.
+    # Desktop delivery is opt-in because it writes outside the repo.
+    if os.environ.get("MIA_OPEN_DESKTOP_BRIEFING", "").lower() in {"1", "true", "yes"}:
+        desktop_path = HOME / "Desktop" / "Daily Briefing.txt"
+        desktop_path.write_text(output)
+        saved_locations.append("Desktop")
 
-    log(f"Briefing saved: {latest.name}, {archive.name}, Desktop", "OK")
+        try:
+            subprocess.Popen(
+                ["open", str(desktop_path)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        except Exception:
+            pass  # Non-critical — user can open manually.
+
+    log(f"Briefing saved: {', '.join(saved_locations)}", "OK")
 
 
 # ---------------------------------------------------------------------------
@@ -241,8 +245,13 @@ def cmd_status():
     log(f"Running processes: {proc_count}")
 
 
-def cmd_clean():
+def cmd_clean(confirm: str | None = None):
     print("\n  === DECLUTTER ===================================================")
+    if confirm != "--confirm":
+        print("  Live organization requires: python hub.py clean --confirm")
+        print("  Running preview instead.\n")
+        run_agent("file_organizer")
+        return
     run_agent("file_organizer", "--clean")
 
 
@@ -360,7 +369,7 @@ def cmd_mode(mode_name: str):
         "briefing": lambda step: cmd_briefing(),
         "scan": lambda step: cmd_scan(),
         "organize": lambda step: cmd_organize(),
-        "clean": lambda step: cmd_clean(),
+        "clean": lambda step: cmd_clean(step.get("confirm")),
         "launch": lambda step: cmd_launch(step.get("profile", "work")),
         "tile": lambda step: cmd_tile(),
         "focus": lambda step: cmd_focus(step.get("minutes", 90)),
@@ -512,7 +521,7 @@ def interactive_menu():
         ("5", "Launch Work Apps", lambda: cmd_launch("work")),
         ("6", "Tile Windows", cmd_tile),
         ("7", "Workspace Status", cmd_status),
-        ("8", "Declutter Desktop/Downloads", cmd_clean),
+        ("8", "Declutter Desktop/Downloads (preview)", lambda: cmd_clean(None)),
         ("9", "FULL MORNING BOOT", lambda: cmd_mode("morning")),
         ("d", "System Audit", cmd_audit),
         ("q", "Quit", None),
@@ -569,6 +578,11 @@ def main():
         ],
     )
     parser.add_argument("extra", nargs="*", default=[])
+    parser.add_argument(
+        "--confirm",
+        action="store_true",
+        help="Confirm write-capable commands such as clean.",
+    )
 
     args = parser.parse_args()
 
@@ -580,7 +594,7 @@ def main():
         "launch": lambda: cmd_launch(args.extra[0] if args.extra else "work"),
         "tile": cmd_tile,
         "status": cmd_status,
-        "clean": cmd_clean,
+        "clean": lambda: cmd_clean("--confirm" if args.confirm else None),
         "all": lambda: cmd_mode("morning"),
         "mode": lambda: cmd_mode(args.extra[0] if args.extra else "morning"),
         "audit": cmd_audit,
