@@ -32,6 +32,7 @@ logs/
 state/
 *.sqlite
 *.db
+*.hxd
 
 # Secrets and credentials
 config/projects.json
@@ -41,6 +42,8 @@ token.json
 client_secret_*.json
 *.pem
 *.key
+*.p12
+*.pfx
 .env
 .env.*
 
