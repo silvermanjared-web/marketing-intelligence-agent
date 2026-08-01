@@ -27,7 +27,7 @@ fi
 echo "  Installing dependencies..."
 source "${VENV_DIR}/bin/activate"
 pip install --quiet --upgrade pip
-pip install --quiet -r "${REPO_ROOT}/requirements.txt"
+pip install --quiet --require-hashes -r "${REPO_ROOT}/requirements.lock.txt"
 echo "  [OK] Dependencies installed"
 
 # Create config files from examples if they don't exist.
