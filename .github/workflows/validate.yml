@@ -38,3 +38,15 @@ jobs:
 
       - name: Check command help
         run: python hub.py --help >/dev/null
+
+  required:
+    name: Validate marketing intelligence agent
+    if: ${{ always() }}
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Require validation matrix success
+        env:
+          VALIDATE_RESULT: ${{ needs.validate.result }}
+        run: test "$VALIDATE_RESULT" = "success"
