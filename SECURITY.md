@@ -66,3 +66,9 @@ If the report is declined, the reason will be explained when appropriate.
 Please allow time for review and remediation before sharing any security-sensitive concern publicly.
 
 This repository is intended to support responsible local automation and marketing intelligence workflows. Reports that help keep the project safe, accurate, and appropriately scoped are welcome.
+
+## Branch Protection
+
+Main branch force-push and deletion protection is enforced via GitHub branch
+protection rules. Direct pushes to main are blocked; all changes require a
+pull request with passing CI.
