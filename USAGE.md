@@ -14,6 +14,6 @@ Scripts and examples are provided for demonstration and review only unless a sep
 
 ## Installation
 
-Install dependencies from the hash-pinned lock file, not the range file: `pip install -r requirements.lock.txt`.
+Install dependencies from the hash-pinned lock file, not the range file: `pip install --require-hashes -r requirements.lock.txt`.
 
 This material is provided as-is and is not warranted for production use.
