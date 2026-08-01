@@ -105,6 +105,8 @@ Keep local configuration and private project data out of public commits.
 
 This repo is part of a connected public system. See the [GitHub Ecosystem Map](https://github.com/silvermanjared-web/growth-architecture-os/blob/main/docs/ecosystem-map.md) for how the repos relate.
 
+This repository governs how source-aware signals become reviewed intelligence. The [`private-to-public-release-gate`](https://github.com/silvermanjared-web/private-to-public-release-gate) applies the same boundary discipline to publication: private-derived code or operating patterns must clear privacy checks and match the reviewed public distribution before release. The connection is shared governance logic, not a claim that this agent is generated from a private repository.
+
 Shared terminology: [Common Language](https://github.com/silvermanjared-web/growth-architecture-os/blob/main/docs/common-language.md).
 
 Usage and rights: see [USAGE.md](USAGE.md).
@@ -112,6 +114,7 @@ Usage and rights: see [USAGE.md](USAGE.md).
 - [`growth-architecture-os`](https://github.com/silvermanjared-web/growth-architecture-os)
 - [`marketing-ops-toolkit`](https://github.com/silvermanjared-web/marketing-ops-toolkit)
 - [`marketing-ops-playbooks`](https://github.com/silvermanjared-web/marketing-ops-playbooks)
+- [`private-to-public-release-gate`](https://github.com/silvermanjared-web/private-to-public-release-gate)
 
 ## Design principles
 
