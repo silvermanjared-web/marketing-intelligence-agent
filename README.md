@@ -125,3 +125,5 @@ Usage and rights: see [USAGE.md](USAGE.md).
 ## What this demonstrates
 
 This project reflects how I approach marketing operations and growth systems: structured workflows, repeatable routines, clear signal detection, and practical automation that reduces manual overhead without sacrificing judgment.
+
+Part of the [Jared Silverman growth portfolio](https://github.com/silvermanjared-web) — see also [Growth Architecture OS](https://github.com/silvermanjared-web/growth-architecture-os) for the operating model and strategic context.
