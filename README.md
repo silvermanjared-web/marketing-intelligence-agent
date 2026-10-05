@@ -176,6 +176,13 @@ python3 -m src.core.capabilities discover
 - [Private-to-Public Release Gate](https://github.com/silvermanjared-web/private-to-public-release-gate)
 - [AI Context & Design System](https://github.com/silvermanjared-web/brand-context-system)
 
+
+## Federation
+
+This repository is an autonomous member of the public [Growth Architecture OS federation](https://github.com/silvermanjared-web/growth-architecture-os/blob/main/docs/public-federation.md). It remains independently usable while publishing explicit contracts for what it provides, what it can consume, and the authority it retains locally.
+
+See [FEDERATION.md](FEDERATION.md).
+
 ## IP and usage
 
 This repository is public for professional review and portfolio context. It is not a distribution of private operating-system data or integrations and is not licensed for commercial reuse, resale, model training, or derivative productization without permission.
