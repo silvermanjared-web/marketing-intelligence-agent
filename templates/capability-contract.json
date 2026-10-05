@@ -1,0 +1,7 @@
+{
+  "name": "files.organize.apply",
+  "description": "Apply a previously inspectable, bounded organization operation.",
+  "effect": "write",
+  "requires_confirmation": true,
+  "client_transport": "CLI, agent adapter, or MCP-compatible tool surface"
+}
