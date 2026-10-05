@@ -1,0 +1,13 @@
+{
+  "name": "marketing-intelligence-agent",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AI operating layer for growth intelligence, source-aware synthesis, bounded execution, and receipts.",
+  "scripts": {
+    "smoke": "python3 scripts/smoke.py",
+    "test:unit": "python3 -m unittest tests.test_capabilities",
+    "test:security": "python3 -m unittest tests.test_security",
+    "test": "npm run smoke && npm run test:unit && npm run test:security"
+  },
+  "license": "UNLICENSED"
+}
