@@ -36,6 +36,9 @@ jobs:
       - name: Compile Python modules
         run: python -m py_compile $(git ls-files "*.py")
 
+      - name: Run smoke, unit, and security tests
+        run: npm test
+
       - name: Check command help
         run: python hub.py --help >/dev/null
 
