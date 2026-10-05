@@ -1,132 +1,183 @@
-# Marketing Intelligence Agent
+# Marketing Intelligence Agent 2.0
 
-A lightweight local system for automating marketing intelligence workflows: performance monitoring, risk detection, workflow orchestration, and executive-ready briefing generation.
+**An AI operating layer for growth intelligence.**
 
-This project is designed to reduce manual reporting overhead and improve decision speed across complex marketing and paid media environments.
+This repository turns fragmented marketing signals into prioritized decisions, routes repeatable work through declared capabilities, keeps consequential actions inside explicit authority boundaries, and returns evidence of what happened.
 
-## Why this exists
+It is intentionally local-first and public-safe. The goal is not autonomous theater. The goal is reliable operating leverage.
 
-Performance marketing creates fragmented signals across platforms, files, reports, inboxes, and team workflows. Most teams have dashboards, but dashboards do not always explain what matters, what changed, or what needs attention.
+## Five-minute proof
 
-This agent addresses the synthesis layer.
+Run:
 
-It turns raw operational inputs into structured, prioritized intelligence so an operator can move faster without losing judgment.
-
-## Architecture
-
-```text
-hub.py (orchestrator)
-├── briefing_agent      — morning intelligence synthesis
-├── health_scanner      — project and campaign health checks
-├── file_organizer      — report and asset organization
-└── config/modes.json   — composable workflow definitions
+```bash
+npm test
+python3 -m src.core.capabilities discover
 ```
+
+The first command runs smoke, unit, and security tests. The second prints the real capability surface.
+
+Then inspect:
+
+- `src/core/capabilities.py` for capability discovery and invocation.
+- `src/core/receipts.py` for execution evidence.
+- `hub.py` for orchestration.
+- `src/agents/` for the actual agent implementations.
+- `docs/ai-operating-system-reference.md` for the architecture mapping.
+
+## Selected evidence
+
+| Question | Evidence |
+|---|---|
+| Can it expose what it can actually do? | Explicit capability registry with effect and confirmation metadata |
+| Can it separate observation from mutation? | Read capabilities and write capabilities are declared separately |
+| Can it keep writes bounded? | `files.organize.apply` refuses execution without confirmation |
+| Can it orchestrate multiple operating functions? | Briefing, health scanning, file organization, audit, and config-driven modes |
+| Can clients interoperate without permission drift? | Transport-neutral capability contract plus MCP interoperability reference |
+| Is the public repo testable? | Smoke, unit, security, and repository validation paths |
+
+## What I built
+
+The system combines growth-intelligence workflows with an explicit AI operating contract:
 
 ```mermaid
 flowchart LR
-    Inputs[Operational inputs] --> Hub[hub.py orchestrator]
-    Config[Workflow configuration] --> Hub
-    Hub --> Briefing[Briefing agent]
-    Hub --> Scanner[Health scanner]
-    Hub --> Organizer[File organizer]
-    Briefing --> Output[Prioritized brief]
-    Scanner --> Output
-    Organizer --> Output
-    Output --> Review[Human review]
-    Review --> Action[Next action]
+    S[Signals + configured sources] --> C[Context]
+    C --> D[Capability discovery]
+    D --> R[Router / hub]
+    R --> B[Briefing agent]
+    R --> H[Health scanner]
+    R --> F[File organizer]
+    R --> A[System audit]
+    B --> E[Receipt + evidence]
+    H --> E
+    F --> E
+    A --> E
+    E --> J[Human judgment / next action]
 ```
 
-The orchestrator dispatches modular agents through a consistent interface. Workflows are defined through configuration rather than hardcoded sequences.
+The operating layer is built around six concerns:
 
-## Core concepts
+- **Context**: configured projects, modes, files, and source inputs.
+- **Capabilities**: named operations the system can actually perform.
+- **Routing**: hub-level orchestration and modular agent dispatch.
+- **Authority**: explicit read/write effects and confirmation requirements.
+- **Execution**: repeatable workflows instead of one-off prompting.
+- **Evidence**: structured receipts, logs, and health state.
 
-- **Modular agents** — each agent exposes a consistent run interface
-- **Config-driven workflows** — repeatable modes define how agents work together
-- **State-aware execution** — avoids redundant work and supports repeatable routines
-- **Signal scoring** — prioritizes high-value inputs and suppresses noise
-- **Local-first operation** — designed to run without unnecessary cloud dependencies
+## Core point of view
+
+Dashboards describe. Operating systems decide what deserves attention and make the next action easier.
+
+My standard for AI-enabled marketing operations is:
+
+- signal over noise;
+- source-aware context;
+- explicit capabilities;
+- config before hardcoding;
+- preview before mutation;
+- bounded execution instead of general-purpose authority;
+- human judgment for consequential marketing decisions;
+- receipts after execution;
+- self-maintenance where the system can safely handle it.
+
+## Signature frameworks
+
+### Signal → Decision → Action
+
+1. **Signal**: detect a meaningful change.
+2. **Decision**: frame why it matters and what must be resolved.
+3. **Action**: route the next bounded operation or surface it to a human owner.
+
+### Observe → Propose → Mutate
+
+Read broadly enough to diagnose. Preview or propose when the effect is consequential. Mutate only through a named, admitted capability.
+
+### Capability + receipt
+
+A capability says what the system may do. A receipt says what it actually did.
+
+That separation makes the system easier to inspect, test, and expose to multiple AI clients.
 
 ## Capabilities
 
-- **Intelligence briefing** — synthesizes inputs into a decision-ready report with scored prioritization
-- **Health scanning** — evaluates project hygiene and system drift
-- **Smart organization** — categorizes and routes files with dry-run preview
-- **Composable workflows** — chains agents through configurable modes
-- **Trend memory** — tracks signals over time for pattern detection
+Current public capability surface:
 
-## Stack
+| Capability | Effect | Confirmation |
+|---|---|---|
+| `intelligence.brief` | read | no |
+| `health.scan` | read | no |
+| `files.organize.preview` | read | no |
+| `files.organize.apply` | write | yes |
+| `system.audit` | read | no |
 
-- Python 3.12+
-- SQLite for local state
-- macOS automation where useful
-- Gmail API for read-only workflows where configured
+Run `python3 -m src.core.capabilities discover` to inspect the registry directly.
 
-No required cloud runtime. Designed for local execution.
+## MCP and client interoperability
+
+The capability layer is transport-neutral. ChatGPT, Claude, a CLI client, or an MCP-compatible surface can expose the same admitted capabilities without inventing a separate permission model.
+
+MCP is treated as a client and transport boundary, not as the owner of business authority.
+
+See [MCP interoperability](references/mcp-interoperability.md).
+
+## Ecosystem map
+
+This repository is the intelligence layer in the broader [Growth Architecture OS](https://github.com/silvermanjared-web/growth-architecture-os) portfolio.
+
+- **Growth Architecture OS**: operating philosophy and growth leadership.
+- **Marketing Intelligence Agent**: synthesis, monitoring, routing, and intelligence.
+- **Marketing Ops Toolkit**: deterministic checks and bounded operational execution.
+- **AI Context & Design System**: structured context and AI-assisted design handoff.
+- **Private-to-Public Release Gate**: privacy-safe publication boundary.
+
+The shared AI operating-system reference lives in [Growth Architecture OS](https://github.com/silvermanjared-web/growth-architecture-os/tree/main/04-ai-systems/ai-operating-system-reference).
+
+## How to read this repo
+
+For a five-minute evaluation, run the tests and inspect the capability registry.
+
+For architecture, read `docs/ai-operating-system-reference.md`.
+
+For executable behavior, read `hub.py`, `src/agents/`, and `src/core/`.
+
+For safety and authority, read `GOVERNANCE.md`, `SECURITY.md`, `CHATGPT.md`, and `CLAUDE.md`.
+
+For public evidence boundaries, read `proof-points.md`.
 
 ## Usage
 
-Entry point: `hub.py`
+Core commands:
 
-Core local commands:
+```bash
+python3 hub.py briefing
+python3 hub.py scan
+python3 hub.py organize
+python3 hub.py clean --confirm
+python3 hub.py mode morning
+python3 hub.py audit
+python3 -m src.core.capabilities discover
+```
 
-| Command | Purpose |
-|---|---|
-| `python hub.py` | Open the interactive menu |
-| `python hub.py briefing` | Generate a morning intelligence report |
-| `python hub.py mode morning` | Run a coordinated morning workflow |
-| `python hub.py scan` | Run a project health check |
-| `python hub.py organize` | Preview Desktop/Downloads organization |
-| `python hub.py clean --confirm` | Apply Desktop/Downloads organization after preview review |
-| `python hub.py mode deep_work` | Prepare a focused workspace workflow |
-| `python hub.py audit` | Run a system health audit |
+`organize` is preview-only. Live file organization requires the explicit `clean --confirm` path.
 
-Local side-effect guardrails:
+## Further reading
 
-- Briefings are saved under `logs/` by default. Set `MIA_OPEN_DESKTOP_BRIEFING=1` only if you want a Desktop copy opened locally.
-- `organize` is preview-only. `clean --confirm` is required before the hub moves files in Desktop or Downloads.
-- Gmail briefing reads are optional and read-only. Set `MIA_GMAIL_CREDENTIAL_DIR` if your OAuth files live outside the default local credential folder.
-
-## Example output
-
-See [`examples/example-run.md`](examples/example-run.md) for a mock briefing run that shows the intended output shape: detected signals, prioritized risks, and recommended next actions.
-
-## Configuration
-
-Copy the example configuration files before running local workflows:
-
-| Example file | Local file |
-|---|---|
-| `config/projects.example.json` | `config/projects.json` |
-| `config/modes.example.json` | `config/modes.json` |
-
-Keep local configuration and private project data out of public commits.
+- [AI operating-system mapping](docs/ai-operating-system-reference.md)
+- [MCP interoperability](references/mcp-interoperability.md)
+- [Proof points](proof-points.md)
+- [Security policy](SECURITY.md)
+- [Governance](GOVERNANCE.md)
 
 ## Related repos
 
-This repo is part of a connected public system. See the [GitHub Ecosystem Map](https://github.com/silvermanjared-web/growth-architecture-os/blob/main/docs/ecosystem-map.md) for how the repos relate.
+- [Growth Architecture OS](https://github.com/silvermanjared-web/growth-architecture-os)
+- [Marketing Ops Toolkit](https://github.com/silvermanjared-web/marketing-ops-toolkit)
+- [Private-to-Public Release Gate](https://github.com/silvermanjared-web/private-to-public-release-gate)
+- [AI Context & Design System](https://github.com/silvermanjared-web/brand-context-system)
 
-This repository governs how source-aware signals become reviewed intelligence. The [`private-to-public-release-gate`](https://github.com/silvermanjared-web/private-to-public-release-gate) applies the same boundary discipline to publication: private-derived code or operating patterns must clear privacy checks and match the reviewed public distribution before release. The connection is shared governance logic, not a claim that this agent is generated from a private repository.
+## IP and usage
 
-Shared terminology: [Common Language](https://github.com/silvermanjared-web/growth-architecture-os/blob/main/docs/common-language.md).
+This repository is public for professional review and portfolio context. It is not a distribution of private operating-system data or integrations and is not licensed for commercial reuse, resale, model training, or derivative productization without permission.
 
-Usage and rights: see [USAGE.md](USAGE.md).
-
-- [`growth-architecture-os`](https://github.com/silvermanjared-web/growth-architecture-os)
-- [`marketing-ops-toolkit`](https://github.com/silvermanjared-web/marketing-ops-toolkit)
-- [`marketing-ops-playbooks`](https://github.com/silvermanjared-web/marketing-ops-playbooks)
-- [`private-to-public-release-gate`](https://github.com/silvermanjared-web/private-to-public-release-gate)
-
-## Design principles
-
-- **Diagnostic first** — measure before acting
-- **Signal over noise** — prioritize what matters
-- **Config over code** — workflows should be defined, not hardcoded
-- **State-aware** — avoid redundant execution
-- **Anti-drift** — build system auditing into the workflow
-- **Human judgment stays in the loop** — automation should support decisions, not pretend to replace them
-
-## What this demonstrates
-
-This project reflects how I approach marketing operations and growth systems: structured workflows, repeatable routines, clear signal detection, and practical automation that reduces manual overhead without sacrificing judgment.
-
-Part of the [Jared Silverman growth portfolio](https://github.com/silvermanjared-web) — see also [Growth Architecture OS](https://github.com/silvermanjared-web/growth-architecture-os) for the operating model and strategic context.
+See [USAGE.md](USAGE.md).
