@@ -1,0 +1,9 @@
+{
+  "entrypoint": "README.md",
+  "capabilities": "src/core/capabilities.py",
+  "receipts": "src/core/receipts.py",
+  "architecture": "docs/ai-operating-system-reference.md",
+  "proof": "proof-points.md",
+  "security": "SECURITY.md",
+  "governance": "GOVERNANCE.md"
+}
